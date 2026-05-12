@@ -1,0 +1,24 @@
+# ─────────────────────────────────────────────────────────────
+#  AI Resume Analyzer — Python Dependencies
+#  Install with:  pip install -r requirements.txt
+# ─────────────────────────────────────────────────────────────
+
+# Web UI framework
+streamlit>=1.35.0
+
+
+
+# PDF text extraction (primary)
+pdfplumber>=0.11.0
+
+# PDF text extraction (fallback)
+PyPDF2>=3.0.1
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# Already included transitively, but pin for stability
+Pillow>=10.0.0
+
+groq
+azure-storage-blob
