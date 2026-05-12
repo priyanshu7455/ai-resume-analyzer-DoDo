@@ -441,9 +441,18 @@ with col2:
 #  METADATA PREVIEW  (shown once PDF is uploaded, before analysis)
 # ══════════════════════════════════════════════════════════════════════════
 if uploaded_file is not None and not analyze_btn:
-    upload_to_blob(uploaded_file.name, pdf_bytes)
+    # ── Read bytes HERE so they're available for both upload & metadata ──
+    pdf_bytes = uploaded_file.read()
+ 
+    # ── Upload to Azure Blob Storage ─────────────────────────────────────
+    upload_result = upload_to_blob(uploaded_file.name, pdf_bytes)
+    if upload_result.startswith("✅"):
+        st.sidebar.success(upload_result)
+    else:
+        st.sidebar.warning(upload_result)
+ 
     meta = get_pdf_metadata(pdf_bytes)
-
+ 
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown(f"""
@@ -463,7 +472,7 @@ if uploaded_file is not None and not analyze_btn:
             <div class="label">📝 Word Count</div>
             <div class="value">{meta["word_count"]:,}</div>
         </div>""", unsafe_allow_html=True)
-
+ 
     st.markdown("---")
 
 
